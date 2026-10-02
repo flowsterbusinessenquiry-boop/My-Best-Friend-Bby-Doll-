@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>For My Cocaine - Mahi ❤️</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Great+Vibes&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      font-family: 'Hind Siliguri', 'Poppins', sans-serif;
+      background: #0f051d;
+      color: #ffffff;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Animated background gradient */
+    .bg-gradient-animated {
+      background: linear-gradient(-45deg, #0f051d, #2a0835, #4a0e2e, #1f002b);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Glassmorphic card design */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 182, 193, 0.2);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    }
+
+    .glass-pill {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    /* Glowing Text Animations */
+    .glow-text {
+      text-shadow: 0 0 15px rgba(255, 77, 109, 0.8), 0 0 30px rgba(255, 77, 109, 0.4);
+    }
+
+    .glow-gold {
+      text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+    }
+
+    /* Envelope CSS Animation */
+    .envelope-wrapper {
+      perspective: 1000px;
+    }
+
+    .envelope {
+      position: relative;
+      width: 280px;
+      height: 180px;
+      background: #e63946;
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+      cursor: pointer;
+      margin: 0 auto;
+      transition: transform 0.4s ease;
+    }
+
+    .envelope:hover {
+      transform: scale(1.03);
+    }
+
+    .envelope .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 140px solid transparent;
+      border-right: 140px solid transparent;
+      border-top: 100px solid #ff4d6d;
+      transform-origin: top;
+      transition: transform 0.6s ease;
+      z-index: 3;
+    }
+
+    .envelope .pocket {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 140px solid #c9184a;
+      border-right: 140px solid #c9184a;
+      border-bottom: 90px solid #ff4d6d;
+      border-radius: 0 0 12px 12px;
+      z-index: 2;
+    }
+
+    .envelope .letter {
+      position: absolute;
+      bottom: 10px;
+      left: 15px;
+      width: 250px;
+      height: 160px;
+      background: #fff0f3;
+      color: #590d22;
+      border-radius: 8px;
+      padding: 15px;
+      transition: transform 0.8s ease, height 0.8s ease, z-index 0s 0.3s;
+      z-index: 1;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .envelope.open .flap {
+      transform: rotateX(180deg);
+      z-index: 0;
+    }
+
+    .envelope.open .letter {
+      transform: translateY(-130px);
+      height: 280px;
+      z-index: 4;
+      overflow-y: auto;
+    }
+
+    /* Flip/Tap Secret Cards */
+    .tap-card {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .tap-card:active {
+      transform: scale(0.97);
+    }
+
+    /* Pulsing button effect */
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 0 0 rgba(255, 77, 109, 0.7); }
+      70% { box-shadow: 0 0 0 20px rgba(255, 77, 109, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 77, 109, 0); }
+    }
+
+    .btn-pulse {
+      animation: pulseGlow 2s infinite;
+    }
+
+    /* Modal Backdrop */
+    .modal-backdrop {
+      background: rgba(10, 2, 20, 0.85);
+      backdrop-filter: blur(12px);
+    }
+  </style>
+</head>
+<body class="bg-gradient-animated relative min-h-screen pb-16">
+
+  <!-- Floating background canvas -->
+  <canvas id="bgCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+  <canvas id="sparkleCanvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
+
+  <!-- Audio Synthesizer Control Toggle -->
+  <div class="fixed top-4 right-4 z-40">
+    <button id="musicBtn" onclick="toggleAudio()" class="glass-pill px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-2 text-pink-200 hover:text-white transition shadow-lg">
+      <i id="musicIcon" class="fas fa-music text-pink-400"></i>
+      <span id="musicText">প্লে মিউজিক 🎵</span>
+    </button>
+  </div>
+
+  <!-- Main Container -->
+  <main class="relative z-10 max-w-md mx-auto px-4 pt-8 space-y-6">
+
+    <!-- Hero Header -->
+    <header class="text-center space-y-3">
+      <div class="inline-block p-1 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-red-500 animate-pulse">
+        <div class="glass-card rounded-full p-2 px-5">
+          <span class="text-xs font-bold tracking-widest text-pink-300 uppercase">Special Gift For</span>
+        </div>
+      </div>
+      
+      <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-red-300 to-amber-200 glow-text tracking-wide">
+        Hey Mahi ❤️
+      </h1>
+
+      <!-- Cute Badges -->
+      <div class="flex flex-wrap justify-center gap-2 pt-1">
+        <span class="glass-pill px-3 py-1 rounded-full text-xs text-pink-200 flex items-center gap-1 shadow-sm">
+          <i class="fas fa-heart text-red-400"></i> My bby 💫
+        </span>
+        <span class="glass-pill px-3 py-1 rounded-full text-xs text-purple-200 flex items-center gap-1 shadow-sm">
+          <i class="fas fa-vial text-purple-400"></i> My cocaine 🧪❤️
+        </span>
+        <span class="glass-pill px-3 py-1 rounded-full text-xs text-amber-200 flex items-center gap-1 shadow-sm">
+          <i class="fas fa-fire text-amber-400"></i> My Favorite Addiction
+        </span>
+      </div>
+
+      <!-- Live Heartbeat Counter -->
+      <div class="glass-card rounded-2xl p-4 mt-4 border border-pink-500/20">
+        <p class="text-xs text-pink-300 font-medium mb-1">তোমায় ভালোবাসার সময় গণনাকারী ⏱️</p>
+        <div class="text-xl font-bold text-amber-300 tracking-wider font-mono" id="loveTimer">
+          Loading endless love...
+        </div>
+        <p class="text-[10px] text-gray-400 mt-1">Loving you every single second, non-stop! ♾️</p>
+      </div>
+    </header>
+
+    <!-- Interactive Secret Envelope -->
+    <section class="glass-card rounded-3xl p-6 text-center space-y-4">
+      <div class="flex justify-center items-center gap-2 text-pink-300 text-sm font-semibold">
+        <i class="fas fa-envelope-open-text"></i>
+        <span>একটি গোপন চিঠি তোমার জন্য 💌</span>
+      </div>
+      <p class="text-xs text-gray-300">খামটিতে চাপ দিয়ে চিঠিটি খুলে নাও, bby!</p>
+
+      <div class="envelope-wrapper py-4">
+        <div id="envelope" class="envelope" onclick="openEnvelope()">
+          <div class="flap"></div>
+          <div class="pocket"></div>
+          <div class="letter text-left">
+            <div class="border-b border-pink-300 pb-2 mb-2 flex justify-between items-center">
+              <span class="font-bold text-sm text-pink-700">For My Dearest Mahi,</span>
+              <i class="fas fa-heart text-red-500 text-xs"></i>
+            </div>
+            <p class="text-xs leading-relaxed text-gray-800 font-sans">
+              <strong>I love you, I miss you, I am here for you my cocaine! ❤️</strong>
+              <br><br>
+              তোমার প্রতিটা হাসি আমার দিনটাকে আলো করে তোলে। পৃথিবীতে হাজারো মানুষের ভিড়ে তুমিই আমার সবচেয়ে প্রিয় নিঃশ্বাস। তোমার রাগ, তোমার মায়া, তোমার পাগলামি—সবকিছুতেই আমি বিমোহিত।
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bengali Poetry Corner -->
+    <section class="glass-card rounded-3xl p-6 space-y-4">
+      <div class="flex items-center gap-2 text-amber-300 font-bold text-lg border-b border-white/10 pb-2">
+        <i class="fas fa-feather-alt text-pink-400"></i>
+        <span>কবিতা কোণার ভালোবাসা ✨</span>
+      </div>
+
+      <!-- Romantic Poem -->
+      <div class="bg-black/30 p-4 rounded-2xl border-l-4 border-pink-500 space-y-2">
+        <span class="text-[11px] uppercase tracking-wider text-pink-400 font-bold">💖 মিষ্টি প্রেম</span>
+        <p class="text-sm leading-relaxed italic text-pink-100">
+          "তুমি আমার সকালের রোদের মিষ্টি হাসি,<br>
+          তুমি আমার রাতের তারায় তোমায় ভালোবাসি।<br>
+          তুমি আমার নেশা, আমার মায়াবী এক টান,<br>
+          আমার মিষ্টি মাহি, তুমিই আমার প্রাণ।" 🌸
+        </p>
+      </div>
+
+      <!-- Playful / Funny Poem -->
+      <div class="bg-black/30 p-4 rounded-2xl border-l-4 border-amber-400 space-y-2">
+        <span class="text-[11px] uppercase tracking-wider text-amber-300 font-bold">😜 একটু মজার ভালোবাসা</span>
+        <p class="text-sm leading-relaxed italic text-amber-100">
+          "চা-তে যেমন চিনি লাগে, চিলিতে যেমন ঝাল,<br>
+          তোমাকে না দেখলে bby, মন থাকে বেসামাল!<br>
+          বিরিয়ানিতে আলু যেমন, চা-তে যেমন পাতা,<br>
+          তুমি ছাড়া আমার জীবনে সবটাই তো মাথা-ব্যথা!" 😋
+        </p>
+      </div>
+    </section>
+
+    <!-- Interactive Tap Cards (Secrets Reveal) -->
+    <section class="space-y-3">
+      <h2 class="text-center text-sm font-semibold text-pink-300 flex items-center justify-center gap-2">
+        <i class="fas fa-hand-pointer"></i> কার্ডগুলোতে চাপ দিয়ে গোপন কথাগুলো জানো!
+      </h2>
+
+      <div class="grid grid-cols-1 gap-3">
+        <!-- Card 1 -->
+        <div onclick="revealCard(this)" class="tap-card glass-card p-4 rounded-2xl cursor-pointer border border-pink-500/30 transition">
+          <div class="flex justify-between items-center text-sm font-bold text-pink-200">
+            <span><i class="fas fa-vial text-purple-400 mr-2"></i>কেন তোমায় 'Cocaine' ডাকি?</span>
+            <i class="fas fa-chevron-down text-xs transition-transform duration-300 icon-arrow"></i>
+          </div>
+          <div class="hidden text-xs text-gray-200 mt-3 pt-2 border-t border-white/10 leading-relaxed font-light">
+            কারণ তুমি আমার এমন এক মায়াবী ও ভালোলাগার নেশা, যার কোনো ওষুধ নেই আর কোনো দ্বিতীয় বিকল্পও নেই! তুমি ছাড়া আমার চলতেই পারে না! 🧪💖
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div onclick="revealCard(this)" class="tap-card glass-card p-4 rounded-2xl cursor-pointer border border-pink-500/30 transition">
+          <div class="flex justify-between items-center text-sm font-bold text-pink-200">
+            <span><i class="fas fa-shield-alt text-amber-400 mr-2"></i>আমার চিরকালের ওয়াদা</span>
+            <i class="fas fa-chevron-down text-xs transition-transform duration-300 icon-arrow"></i>
+          </div>
+          <div class="hidden text-xs text-gray-200 mt-3 pt-2 border-t border-white/10 leading-relaxed font-light">
+            ঝড় উঠুক কিংবা বৃষ্টি নামুক, দিন ভালো যাক কিংবা খারাপ—<strong>I am here for you forever, no matter what happens in life!</strong> 🤝✨
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div onclick="revealCard(this)" class="tap-card glass-card p-4 rounded-2xl cursor-pointer border border-pink-500/30 transition">
+          <div class="flex justify-between items-center text-sm font-bold text-pink-200">
+            <span><i class="fas fa-cloud-moon text-blue-400 mr-2"></i>তোমায় কতটা মিস করি?</span>
+            <i class="fas fa-chevron-down text-xs transition-transform duration-300 icon-arrow"></i>
+          </div>
+          <div class="hidden text-xs text-gray-200 mt-3 pt-2 border-t border-white/10 leading-relaxed font-light">
+            দিনে ৩০০০ বার, ২৪ ঘণ্টা আর বছরে ৩৬৫ দিনই! প্রতিটা চোখের পলকে শুধু তোমার কথাই মনে পড়ে bby! 🥺💫
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Grand Heart Explosion Button Section -->
+    <section class="text-center py-4">
+      <button onclick="triggerGrandSurprise()" class="btn-pulse w-full bg-gradient-to-r from-pink-600 via-red-500 to-purple-600 text-white font-bold py-4 px-6 rounded-full text-base shadow-2xl active:scale-95 transition-transform flex items-center justify-center gap-3">
+        <i class="fas fa-heart text-xl text-yellow-300 animate-bounce"></i>
+        <span>এখানে একটা জাদুকরী চাপ দাও bby 💖</span>
+      </button>
+    </section>
+
+  </main>
+
+  <!-- Grand Surprise Modal -->
+  <div id="surpriseModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop hidden transition-opacity duration-300 opacity-0">
+    <div class="glass-card rounded-3xl p-6 max-w-sm w-full text-center space-y-5 border-2 border-pink-400 shadow-2xl relative transform scale-90 transition-transform duration-300" id="modalBox">
+      
+      <button onclick="closeModal()" class="absolute top-3 right-3 text-gray-400 hover:text-white w-8 h-8 rounded-full glass-pill flex items-center justify-center">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-pink-500 to-red-600 flex items-center justify-center shadow-lg animate-bounce">
+        <i class="fas fa-heart text-4xl text-white"></i>
+      </div>
+
+      <div class="space-y-2">
+        <h3 class="text-2xl font-black text-amber-300 glow-gold tracking-wide">
+          I LOVE YOU MAHI! 💕
+        </h3>
+        <p class="text-sm text-pink-200 font-semibold">
+          You are my ultimate Happiness, my bby & my cocaine forever!
+        </p>
+      </div>
+
+      <div class="bg-black/40 p-4 rounded-xl text-xs text-gray-200 leading-relaxed text-left border border-pink-500/20">
+        "তুমিহীন প্রতিটি মুহূর্ত অসম্পূর্ণ। সারাজীবন তোমার হাতটি এভাবে শক্ত করে ধরে রাখতে চাই, মাহি। সবসময় আমার পাশে থেকো!" 🌸✨
+      </div>
+
+      <button onclick="closeModal()" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 rounded-full text-sm shadow-md">
+        অনেক ভালোবাসি তোমাকে! ❤️
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Live timer logic
+    const startDate = new Date();
+    startDate.setHours(0,0,0,0);
+
+    function updateTimer() {
+      const now = new Date();
+      const diff = now - startDate;
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+      
+      document.getElementById('loveTimer').innerText = 
+        `${String(hours).padStart(2,'0')}h : ${String(minutes).padStart(2,'0')}m : ${String(seconds).padStart(2,'0')}s`;
+    }
+    setInterval(updateTimer, 1000);
+    updateTimer();
+
+    // Envelope Toggle
+    function openEnvelope() {
+      const env = document.getElementById('envelope');
+      env.classList.toggle('open');
+      createSparklesAtCenter();
+    }
+
+    // Tap Cards Accordion
+    function revealCard(element) {
+      const content = element.querySelector('div:last-child');
+      const arrow = element.querySelector('.icon-arrow');
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        arrow.style.transform = 'rotate(180deg)';
+      } else {
+        content.classList.add('hidden');
+        arrow.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    // Web Audio Synthesizer for soft melody
+    let audioCtx = null;
+    let isPlaying = false;
+    let timerId = null;
+
+    function toggleAudio() {
+      const btnText = document.getElementById('musicText');
+      const icon = document.getElementById('musicIcon');
+
+      if (!isPlaying) {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        playMelody();
+        isPlaying = true;
+        btnText.innerText = 'পজ মিউজিক ⏸️';
+        icon.classList.add('animate-spin');
+      } else {
+        stopMelody();
+        isPlaying = false;
+        btnText.innerText = 'প্লে মিউজিক 🎵';
+        icon.classList.remove('animate-spin');
+      }
+    }
+
+    const notes = [261.63, 329.63, 392.00, 523.25, 440.00, 349.23, 392.00]; // C E G C A F G
+    let noteIdx = 0;
+
+    function playMelody() {
+      timerId = setInterval(() => {
+        if (!audioCtx) return;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(notes[noteIdx % notes.length], audioCtx.currentTime);
+        
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.2);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + 1.2);
+        noteIdx++;
+      }, 600);
+    }
+
+    function stopMelody() {
+      if (timerId) clearInterval(timerId);
+    }
+
+    // Background Floating Hearts Canvas
+    const bgCanvas = document.getElementById('bgCanvas');
+    const bgCtx = bgCanvas.getContext('2d');
+    let bgParticles = [];
+
+    function resizeBgCanvas() {
+      bgCanvas.width = window.innerWidth;
+      bgCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeBgCanvas);
+    resizeBgCanvas();
+
+    class HeartParticle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * bgCanvas.width;
+        this.y = bgCanvas.height + Math.random() * 100;
+        this.size = Math.random() * 14 + 8;
+        this.speedY = Math.random() * 1.5 + 0.5;
+        this.speedX = Math.sin(Math.random() * Math.PI) * 0.8;
+        this.opacity = Math.random() * 0.6 + 0.2;
+        this.color = ['#ff4d6d', '#ff758f', '#ffb3c1', '#e0aaff'][Math.floor(Math.random() * 4)];
+      }
+      update() {
+        this.y -= this.speedY;
+        this.x += this.speedX;
+        if (this.y < -20) this.reset();
+      }
+      draw() {
+        bgCtx.save();
+        bgCtx.globalAlpha = this.opacity;
+        bgCtx.fillStyle = this.color;
+        bgCtx.font = `${this.size}px sans-serif`;
+        bgCtx.fillText('❤️', this.x, this.y);
+        bgCtx.restore();
+      }
+    }
+
+    for (let i = 0; i < 25; i++) {
+      bgParticles.push(new HeartParticle());
+    }
+
+    function animateBg() {
+      bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+      bgParticles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateBg);
+    }
+    animateBg();
+
+    // Sparkle Canvas on tap/click
+    const sparkleCanvas = document.getElementById('sparkleCanvas');
+    const sparkleCtx = sparkleCanvas.getContext('2d');
+    let sparkles = [];
+
+    function resizeSparkleCanvas() {
+      sparkleCanvas.width = window.innerWidth;
+      sparkleCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeSparkleCanvas);
+    resizeSparkleCanvas();
+
+    window.addEventListener('pointerdown', (e) => {
+      createSparkles(e.clientX, e.clientY);
+    });
+
+    function createSparkles(x, y) {
+      const items = ['💖', '✨', '🌸', '💕', '⭐'];
+      for (let i = 0; i < 8; i++) {
+        sparkles.push({
+          x: x,
+          y: y,
+          vx: (Math.random() - 0.5) * 6,
+          vy: (Math.random() - 0.5) * 6,
+          size: Math.random() * 16 + 10,
+          text: items[Math.floor(Math.random() * items.length)],
+          alpha: 1,
+          life: 1
+        });
+      }
+    }
+
+    function createSparklesAtCenter() {
+      createSparkles(window.innerWidth / 2, window.innerHeight / 2);
+    }
+
+    function animateSparkles() {
+      sparkleCtx.clearRect(0, 0, sparkleCanvas.width, sparkleCanvas.height);
+      for (let i = sparkles.length - 1; i >= 0; i--) {
+        let s = sparkles[i];
+        s.x += s.vx;
+        s.y += s.vy;
+        s.alpha -= 0.02;
+        if (s.alpha <= 0) {
+          sparkles.splice(i, 1);
+          continue;
+        }
+        sparkleCtx.save();
+        sparkleCtx.globalAlpha = s.alpha;
+        sparkleCtx.font = `${s.size}px sans-serif`;
+        sparkleCtx.fillText(s.text, s.x, s.y);
+        sparkleCtx.restore();
+      }
+      requestAnimationFrame(animateSparkles);
+    }
+    animateSparkles();
+
+    // Grand Surprise Modal & Explosion
+    function triggerGrandSurprise() {
+      const modal = document.getElementById('surpriseModal');
+      const box = document.getElementById('modalBox');
+
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        box.classList.remove('scale-90');
+        box.classList.add('scale-100');
+      }, 10);
+
+      // Create burst of hearts from center
+      for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+          createSparkles(
+            window.innerWidth / 2 + (Math.random() - 0.5) * 200,
+            window.innerHeight / 2 + (Math.random() - 0.5) * 200
+          );
+        }, i * 30);
+      }
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('surpriseModal');
+      const box = document.getElementById('modalBox');
+
+      modal.classList.add('opacity-0');
+      box.classList.remove('scale-100');
+      box.classList.add('scale-90');
+
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 300);
+    }
+  </script>
+</body>
+</html>
